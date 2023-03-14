@@ -13,6 +13,7 @@
             var input = document.getElementById("valor")
             let valor = input.value;
             $("#alert-warning-div").removeClass('alert-hide');            
+            $("#alert-success-div").addClass('alert-hide');
             $.ajax({
                 method: 'POST',
                 url: 'https://webhook.site/0e66d090-104f-4148-b05a-1ffbdab115c8',
