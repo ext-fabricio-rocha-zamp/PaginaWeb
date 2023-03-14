@@ -12,18 +12,20 @@
         function pagar(tipo) {
             var input = document.getElementById("valor")
             let valor = input.value;
-            $("#carregamento").removeAttr("style");
+            $("#alert-warning-div").removeClass('alert-hide');            
             $.ajax({
                 method: 'POST',
                 url: 'https://webhook.site/0e66d090-104f-4148-b05a-1ffbdab115c8',
                 data: JSON.stringify({ value: valor, type: tipo }),
                 // dataType: 'json'
-            }).done((data) => {
-                alert("Done");
+            }).done((data) => {                
                 console.log(data);
+                $("#alert-warning-div").addClass('alert-hide');
+                $("#alert-success-div").removeClass('alert-hide');
             }).fail((err) => {
-                alert("error");
-                console.log(err)
+                console.log(err);
+                alert('Deu erro!')
+                $("#alert-warning-div").addClass('alert-hide');
             });
 
         }
@@ -36,14 +38,11 @@
             <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
                 <div class="col">
                     <div class="card mb-4 rounded-3 shadow-sm">
-                        <!-- <div class="card-header py-3">
-                            <h4 class="my-0 fw-normal">Pagamento ClisiTef</h4>
-                        </div> -->
+                        <div class="card-header py-3">
+                            <h4 class="my-0 fw-normal">Realizar Pagamento</h4>
+                        </div>
                         <div class="card-body">
-                            <ul class="list-unstyled mt-3 mb-4">
-                                <li class="text-header">
-                                    Realizar Pagamento
-                                </li>
+                            <ul class="list-unstyled mt-3 mb-4">                                
                                 <li>
                                     <div class="input-group mb-3">
                                         <span class="input-group-text">R$</span>
@@ -58,10 +57,12 @@
                                         onclick="pagar('credito')">Crédito</button>
                                 </li>
                             </ul>
-                            <div class="spinner-border text-success" id="carregamento" role="status"
-                                style="display: none;">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
+                            <div class="alert alert-warning alert-hide" id="alert-warning-div" role="alert">
+                                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Aguardando Pagamento...
+                              </div>
+                            <div class="alert alert-success alert-hide" id="alert-success-div" role="alert">
+                                Pagamento efetuado!!!
+                              </div>
 
                         </div>
                     </div>
